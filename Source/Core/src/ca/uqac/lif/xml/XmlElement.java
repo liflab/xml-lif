@@ -8,12 +8,12 @@ public class XmlElement
 	/**
 	 * The element's name
 	 */
-	private String m_name;
+	private /*@NonNull*/ String m_name = "";
 
 	/**
 	 * The element's children
 	 */
-	private List<XmlElement> m_children;
+	private /*@NonNull*/ List</*@NonNull*/ XmlElement> m_children;
 
 	/**
 	 * Creates an empty XML element
@@ -133,7 +133,7 @@ public class XmlElement
 	 * Gets the element's name
 	 * @return The name
 	 */
-	public String getName()
+	public /*@NonNull*/ String getName()
 	{
 		return m_name;
 	}
@@ -149,5 +149,22 @@ public class XmlElement
 		}
 		out.append("</").append(m_name).append(">");
 		return out.toString();
+	}
+	
+	/**
+	 * Exception denoting an error in the parsing of an XML document
+	 */
+	public static class XmlParseException extends EmptyException
+	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public XmlParseException(String message)
+		{
+			super(message);
+			// TODO Auto-generated constructor stub
+		}
 	}
 }

@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class ParseTest
+import ca.uqac.lif.xml.XmlElement.XmlParseException;
+
+public class XmlParseTest
 {
 	@Test
 	public void testEmpty() throws XmlParseException

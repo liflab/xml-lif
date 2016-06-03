@@ -1,6 +1,6 @@
 package ca.uqac.lif.xml;
 
-public class XmlParseException extends Exception
+public class EmptyException extends Exception
 {
 	private final String m_message;
 	
@@ -9,7 +9,7 @@ public class XmlParseException extends Exception
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public XmlParseException(String message)
+	public EmptyException(String message)
 	{
 		super();
 		m_message = message;
