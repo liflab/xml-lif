@@ -144,6 +144,20 @@ public class XmlParseTest
 	}
 	
 	@Test
+	public void testNested5() throws XmlParseException
+	{
+		XmlElement e = XmlElement.parse("<root><a>1</a></root>");
+		assertNotNull(e);
+		assertEquals("root", e.getName());
+		assertEquals(1, e.getChildren().size());
+		{
+			XmlElement child = e.getChildren().get(0);
+			assertNotNull(child);
+			assertEquals("a", child.getName());
+		}
+	}
+	
+	@Test
 	public void testNested4() throws XmlParseException
 	{
 		XmlElement e = XmlElement.parse("<a><b></b>1</a>");
@@ -253,6 +267,20 @@ public class XmlParseTest
 		try
 		{
 			XmlElement.parse("<a><b</a>");
+		}
+		catch (XmlParseException ex)
+		{
+			return;
+		}
+		fail("Should have thrown an exception");
+	}
+	
+	@Test
+	public void testMultipleRoots()
+	{
+		try
+		{
+			XmlElement.parse("<a></a><a></a>");
 		}
 		catch (XmlParseException ex)
 		{

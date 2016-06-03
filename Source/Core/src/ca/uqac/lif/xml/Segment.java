@@ -89,4 +89,16 @@ class Segment
 	{
 		return m_predicates;
 	}
+	
+	@Override
+	public /*@NonNull*/ String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append(m_elementName);
+		for (Predicate p : m_predicates)
+		{
+			out.append(p);
+		}
+		return out.toString();
+	}
 }

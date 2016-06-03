@@ -113,7 +113,9 @@ public class XmlElement
 					throw new XmlParseException("Closing element " + element_name + " not found");
 				}
 				new_element = new XmlElement(element_name);
-				consumed = closing_index + element_name.length() + 4;
+				String inside = s.substring(closing_index + 1, closing_pos);
+				parse(new_element, inside.trim()); 
+				consumed = closing_pos + element_name.length() + 3;
 			}
 			root.addChild(new_element);
 			s = s.substring(consumed).trim();

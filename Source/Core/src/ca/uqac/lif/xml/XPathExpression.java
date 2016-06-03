@@ -49,6 +49,38 @@ public class XPathExpression
 	}
 	
 	/**
+	 * Evaluates an XPath expression, and returns a single element 
+	 * @param root The root
+	 * @return The result of the expression. If the expression returns multiple
+	 * elements, the method picks only one and returns it. If the expression
+	 * returns no element, the method returns null.
+	 */
+	public /*@Nullable*/ XmlElement evaluateAny(/*@NonNull*/ XmlElement root)
+	{
+		Collection<XmlElement> col = evaluate(root);
+		for (XmlElement e : col)
+		{
+			return e;
+		}
+		return null;
+	}
+	
+	/**
+	 * Evaluates an XPath expression, and casts its result as a string
+	 * @param root The root
+	 * @return The result of the expression
+	 */
+	public /*@NonNull*/ String evaluateString(/*@NonNull*/ XmlElement root)
+	{
+		XmlElement e = evaluateAny(root);
+		if (e == null || !(e instanceof TextElement))
+		{
+			return "";
+		}
+		return ((TextElement) e).getText();
+	}
+	
+	/**
 	 * Evaluates an XPath expression, using some element as the root
 	 * @param root The root
 	 * @return The result of the expression
