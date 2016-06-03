@@ -21,6 +21,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+* Performs queries on XML documents. The queries are written using the XPath
+* syntax, with the following restrictions:
+* <ul>
+* <li>Transitive children (<tt>//</tt>) and parent (<tt>../</tt>) axes are
+* not supported</li>
+* <li>Attributes (<tt>@att</tt>) are not supported</li>
+* <li>The only operator allowed in a predicate is equality between a path
+* and a constant</li>
+* </ul>
+* Normal usage involves instantiating an expression from a String using
+* the {@link #parse(String)} method, and then querying a document using the
+* {@link #evaluate(XmlElement)} method.
+* <p>
+* Examples of valid queries:
+* <ol>
+* <li><tt>/abc/def</tt></li>
+* <li><tt>/abc[ghi=3]/def/text()</tt></li>
+* <li><tt>/abc[ghi=3][q=0]/def[xyz='hello']</tt></li>
+* </ol>
+*/ 
 public class XPathExpression
 {
 	/**

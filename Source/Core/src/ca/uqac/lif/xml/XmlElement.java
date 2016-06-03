@@ -20,6 +20,23 @@ package ca.uqac.lif.xml;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representation of an XML document as a tree of named elements.
+ * The current implementation of this class handles XML documents,
+ * barring these restrictions:
+ * <ul>
+ * <li>Elements may have attributes, but they are ignored</li>
+ * <li>Self-closing elements are not recognized</li>
+ * <li>The schema of the document may not be recursive, i.e. an
+ * element named <tt>&lt;a&gt;</tt> must not <em>contain</em> another element
+ * named <tt>&lt;a&gt;</tt> at any level of nesting</li>
+ * <li>Entities and CDATA sections are not supported</li>
+ * </ul>
+ * An Element can be built from a String by using {@link #parse(String)},
+ * and then queried using XPath by creating some {@link XPathExpression}
+ * <tt>exp</tt> and calling {@link XPathExpression#evaluate(XmlElement)}.
+ *
+ */ 
 public class XmlElement 
 {
 	/**
