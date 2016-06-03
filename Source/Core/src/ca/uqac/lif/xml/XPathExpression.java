@@ -102,10 +102,17 @@ public class XPathExpression
 		ArrayList<XmlElement> result = new ArrayList<XmlElement>();
 		if (segments.isEmpty())
 		{
-			result.add(root);
 			return result;
 		}
 		Segment first_segment = segments.get(0);
+		if (first_segment instanceof TextSegment)
+		{
+			if (root instanceof TextElement)
+			{
+				result.add(root);
+			}
+			return result;
+		}
 		if (first_segment.getElementName().compareTo(root.getName()) != 0)
 		{
 			return result;
@@ -121,14 +128,26 @@ public class XPathExpression
 		}
 		// This segment is OK; remove it and continue evaluation with every
 		// child of the root
+		if (segments.size() == 1)
+		{
+			result.add(root);
+			return result;
+		}
 		List<Segment> new_segments = new ArrayList<Segment>();
 		new_segments.addAll(segments);
 		new_segments.remove(0);
-		List<XmlElement> children = root.getChildren();
-		for (XmlElement child : children)
+		if (!new_segments.isEmpty())
 		{
-			/*@NonNull*/ Collection<XmlElement> child_result = evaluate(new_segments, child);
-			result.addAll(child_result);
+			List<XmlElement> children = root.getChildren();
+			for (XmlElement child : children)
+			{
+				/*@NonNull*/ Collection<XmlElement> child_result = evaluate(new_segments, child);
+				result.addAll(child_result);
+			}
+		}
+		else
+		{
+			result.add(root);
 		}
 		return result;
 	}
@@ -156,6 +175,21 @@ public class XPathExpression
 		{
 			super(message);
 		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		for (int i = 0; i < m_segments.size(); i++)
+		{
+			if (i > 0)
+			{
+				out.append(s_pathSeparator);
+			}
+			out.append(m_segments.get(i).toString());
+		}
+		return out.toString();
 	}
 
 }

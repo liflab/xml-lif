@@ -69,6 +69,10 @@ class Segment
 			predicates.add(pred);
 			s = s.substring(closing_symbol_index + 1).trim();
 		}
+		if (element_name.compareTo(TextSegment.s_expression) == 0)
+		{
+			return new TextSegment();
+		}
 		return new Segment(element_name, predicates);
 	}
 	

@@ -288,5 +288,16 @@ public class XmlParseTest
 		}
 		fail("Should have thrown an exception");
 	}
+	
+	@Test
+	public void testToString() throws XmlParseException
+	{
+		/* This is a rather "dummy" test, just to make sure that
+		 * the lines of toString() are covered by some test.
+		 */
+		String to_parse = "<a><b>foo</b></a>";
+		XmlElement e = XmlElement.parse(to_parse);
+		assertEquals(to_parse, e.toString());
+	}
 
 }

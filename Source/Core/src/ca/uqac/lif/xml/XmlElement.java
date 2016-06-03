@@ -141,7 +141,7 @@ public class XmlElement
 	}
 
 	@Override
-	public String toString()
+	public /*@NonNull*/ String toString()
 	{
 		StringBuilder out = new StringBuilder();
 		out.append("<").append(m_name).append(">");
@@ -166,7 +166,22 @@ public class XmlElement
 		public XmlParseException(String message)
 		{
 			super(message);
-			// TODO Auto-generated constructor stub
 		}
+	}
+	
+	/**
+	 * Gets the child text of a node 
+	 * @return The text, or null if no text was found
+	 */
+	public /*@Nullable*/ TextElement getTextElement()
+	{
+		for (XmlElement child : m_children)
+		{
+			if (child instanceof TextElement)
+			{
+				return (TextElement) child;
+			}
+		}
+		return null;
 	}
 }

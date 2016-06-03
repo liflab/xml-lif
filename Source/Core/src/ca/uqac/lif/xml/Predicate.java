@@ -13,7 +13,7 @@ public abstract class Predicate
 	 * The symbol indicating the end of a predicate
 	 */
 	public static transient final String s_endSymbol = "]";
-
+	
 	public static /*@NonNull*/ Predicate parse(/*@NonNull*/ String s) throws XPathParseException
 	{
 		if (s.contains(Equality.s_equalSymbol))

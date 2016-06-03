@@ -115,6 +115,28 @@ public class XPathParseTest
 	}
 	
 	@Test
+	public void testTextSegment1() throws XPathParseException
+	{
+		XPathExpression xpe = XPathExpression.parse("text()");
+		assertNotNull(xpe);
+		assertEquals(1, xpe.getSegments().size());
+		Segment seg = xpe.getSegments().get(0);
+		assertNotNull(seg);
+		assertTrue(seg instanceof TextSegment);
+	}
+	
+	@Test
+	public void testTextSegment2() throws XPathParseException
+	{
+		XPathExpression xpe = XPathExpression.parse("foo/text()");
+		assertNotNull(xpe);
+		assertEquals(2, xpe.getSegments().size());
+		Segment seg = xpe.getSegments().get(1);
+		assertNotNull(seg);
+		assertTrue(seg instanceof TextSegment);
+	}
+	
+	@Test
 	public void testNull()
 	{
 		try
@@ -210,5 +232,60 @@ public class XPathParseTest
 			return;
 		}
 		fail("Should throw an exception");		
+	}
+	
+	@Test
+	public void testMalformedEquality1()
+	{
+		try
+		{
+			XPathExpression.parse("a[=]");
+		}
+		catch (XPathParseException ex)
+		{
+			return;
+		}
+		fail("Should throw an exception");		
+	}
+	
+	@Test
+	public void testMalformedEquality2()
+	{
+		try
+		{
+			XPathExpression.parse("a[=c]");
+		}
+		catch (XPathParseException ex)
+		{
+			return;
+		}
+		fail("Should throw an exception");		
+	}
+	
+	@Test
+	public void testMalformedEquality3()
+	{
+		try
+		{
+			XPathExpression.parse("a[c=]");
+		}
+		catch (XPathParseException ex)
+		{
+			return;
+		}
+		fail("Should throw an exception");		
+	}
+
+
+	
+	@Test
+	public void testToString() throws XPathParseException
+	{
+		/* This is a rather "dummy" test, just to make sure that
+		 * the lines of toString() are covered by some test.
+		 */
+		String to_parse = "a/b[foo=bar]";
+		XPathExpression e = XPathExpression.parse(to_parse);
+		assertEquals(to_parse, e.toString());
 	}
 }
