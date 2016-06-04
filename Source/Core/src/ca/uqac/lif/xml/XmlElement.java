@@ -112,6 +112,12 @@ public class XmlElement
 		return root;
 	}
 
+	/**
+	 * Creates an XML document from a string
+	 * @param root The root of the current document
+	 * @param s The string to read
+	 * @throws XmlParseException If parsing resulted in an error
+	 */
 	protected static void parse(/*@NonNull*/ XmlElement root, /*@NonNull*/ String s) throws XmlParseException
 	{
 		while (!s.isEmpty())
