@@ -173,6 +173,35 @@ public class XPathTest
 		Collection<XmlElement> result = xpath.evaluate(doc);
 		assertEquals(0, result.size());
 	}
+	
+	@Test
+	public void testText1() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a><b>2</b></a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		Collection<XmlElement> result = xpath.evaluate(doc);
+		assertNotNull(result);
+		assertEquals(1, result.size());
+	}
+	
+	@Test
+	public void testAnyString4() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b>5</b></a><a><b>2</b></a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a");
+		String result = xpath.evaluateAnyString(doc);
+		assertNotNull(result);
+		assertEquals("", result);
+	}
+	
+	@Test
+	public void testAnyNumber4() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b>5</b></a><a><b>2</b></a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a");
+		Number result = xpath.evaluateAnyNumber(doc);
+		assertNull(result);
+	}
 
 	@Test
 	public void testAny1() throws XPathParseException, XmlParseException
@@ -197,8 +226,8 @@ public class XPathTest
 	public void testAnyString1() throws XPathParseException, XmlParseException
 	{
 		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
-		XPathExpression xpath = XPathExpression.parse("root/a");
-		String result = xpath.evaluateString(doc);
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		String result = xpath.evaluateAnyString(doc);
 		assertNotNull(result);
 	}
 	
@@ -206,9 +235,153 @@ public class XPathTest
 	public void testAnyString2() throws XPathParseException, XmlParseException
 	{
 		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
-		XPathExpression xpath = XPathExpression.parse("root/b");
-		String result = xpath.evaluateString(doc);
+		XPathExpression xpath = XPathExpression.parse("root/b/text()");
+		String result = xpath.evaluateAnyString(doc);
 		assertEquals("", result);
+	}
+	
+	@Test
+	public void testAnyString3() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a><c></c></a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		String result = xpath.evaluateAnyString(doc);
+		assertEquals("", result);
+	}
+	
+	@Test
+	public void testAnyNumber1() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		Number result = xpath.evaluateAnyNumber(doc);
+		assertTrue(result.intValue() == 1 || result.intValue() == 2);
+	}
+	
+	@Test
+	public void testAnyNumber2() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/b");
+		Number result = xpath.evaluateAnyNumber(doc);
+		assertNull(result);
+	}
+	
+	@Test
+	public void testAnyNumber3() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a>foo</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		Number result = xpath.evaluateAnyNumber(doc);
+		assertNull(result);
+	}
+	
+	@Test
+	public void testAnyInt1() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		int result = xpath.evaluateAnyInt(doc);
+		assertTrue(result == 1 || result == 2);
+	}
+	
+	@Test
+	public void testAnyInt2() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>xyz</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		int result = xpath.evaluateAnyInt(doc);
+		assertEquals(1, result);
+	}
+	
+	@Test
+	public void testAnyInt3() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a>xyz</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		int result = xpath.evaluateAnyInt(doc);
+		assertEquals(0, result);
+	}
+	
+	@Test
+	public void testAnyFloat1() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		float result = xpath.evaluateAnyFloat(doc);
+		assertTrue(result == 1 || result == 2);
+	}
+	
+	@Test
+	public void testAnyFloat2() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>xyz</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		float result = xpath.evaluateAnyFloat(doc);
+		assertTrue(Math.abs(1 - result) < 0.0001);
+	}
+	
+	@Test
+	public void testAnyFloat3() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a>xyz</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		float result = xpath.evaluateAnyFloat(doc);
+		assertTrue(result < 0.0001);
+	}
+	
+	@Test
+	public void testNumbers1() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		Collection<Number> result = xpath.evaluateAsNumbers(doc);
+		assertEquals(2, result.size());
+	}
+	
+	@Test
+	public void testNumbers2() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a>foo</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		Collection<Number> result = xpath.evaluateAsNumbers(doc);
+		assertEquals(0, result.size());
+	}
+	
+	@Test
+	public void testNumbers3() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a>foo</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a");
+		Collection<Number> result = xpath.evaluateAsNumbers(doc);
+		assertEquals(0, result.size());
+	}
+	
+	@Test
+	public void testStrings1() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a>1</a><a>2</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		Collection<String> result = xpath.evaluateAsStrings(doc);
+		assertEquals(2, result.size());
+	}
+	
+	@Test
+	public void testStrings2() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a>foo</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a/text()");
+		Collection<String> result = xpath.evaluateAsStrings(doc);
+		assertEquals(1, result.size());
+	}
+	
+	@Test
+	public void testStrings3() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><a><b></b></a><a>foo</a></root>");
+		XPathExpression xpath = XPathExpression.parse("root/a");
+		Collection<String> result = xpath.evaluateAsStrings(doc);
+		assertEquals(0, result.size());
 	}
 
 }
