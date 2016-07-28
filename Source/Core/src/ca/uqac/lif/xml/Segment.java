@@ -22,7 +22,7 @@ import java.util.Collection;
 
 import ca.uqac.lif.xml.XPathExpression.XPathParseException;
 
-class Segment
+public class Segment
 {
 	/**
 	 * The predicates (if any) associated to this segment
@@ -40,7 +40,7 @@ class Segment
 		m_predicates = null;
 	}
 	
-	Segment(/*@NonNull*/ String element_name, /*@NonNull*/ Collection<Predicate> predicates)
+	public Segment(/*@NonNull*/ String element_name, /*@NonNull*/ Collection<Predicate> predicates)
 	{
 		super();
 		m_elementName = element_name;

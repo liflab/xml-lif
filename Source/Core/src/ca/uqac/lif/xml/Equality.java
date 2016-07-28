@@ -26,12 +26,12 @@ public class Equality extends BinaryPredicate
 	 */
 	public static final transient String s_equalSymbol = "=";
 	
-	Equality()
+	public Equality()
 	{
 		super();
 	}
 	
-	Equality(String left, String right)
+	public Equality(String left, String right)
 	{
 		super(left, right);
 	}

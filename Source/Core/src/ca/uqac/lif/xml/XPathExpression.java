@@ -66,7 +66,7 @@ public class XPathExpression
 	 * Creates an XPath expression from a list of segments
 	 * @param segments The segments
 	 */
-	XPathExpression(/*@NonNull*/ List</*@NonNull*/ Segment> segments)
+	public XPathExpression(/*@NonNull*/ List</*@NonNull*/ Segment> segments)
 	{
 		super();
 		m_segments = segments;
