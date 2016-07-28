@@ -71,4 +71,40 @@ public abstract class BinaryPredicate extends Predicate
 		}
 		return good_child.getTextElement();
 	}
+	
+	/**
+	 * Gets the left part of the predicate
+	 * @return The part
+	 */
+	public String getLeft()
+	{
+		return m_left;
+	}
+	
+	/**
+	 * Sets the left part of the predicate
+	 * @param s The string
+	 */
+	public void setLeft(String s)
+	{
+		m_left = s;
+	}
+	
+	/**
+	 * Gets the right part of the predicate
+	 * @return The part
+	 */
+	public String getRight()
+	{
+		return m_right;
+	}
+	
+	/**
+	 * Sets the right part of the predicate
+	 * @param s The string
+	 */
+	public void setRight(String s)
+	{
+		m_right = s;
+	}
 }
