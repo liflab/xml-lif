@@ -224,4 +224,25 @@ public class XmlElement
 		}
 		return null;
 	}
+	
+	@Override
+	public int hashCode()
+	{
+		return m_name.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (o == null || !(o instanceof XmlElement))
+		{
+			return false;
+		}
+		XmlElement xe = (XmlElement) o;
+		if (m_children.size() != xe.m_children.size())
+		{
+			return false;
+		}
+		return m_children.containsAll(xe.m_children);
+	}
 }

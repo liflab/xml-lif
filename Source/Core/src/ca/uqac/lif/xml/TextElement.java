@@ -49,4 +49,20 @@ public class TextElement extends XmlElement
 	{
 		return m_text;
 	}
+	
+	@Override
+	public int hashCode()
+	{
+		return m_text.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (o == null || !(o instanceof TextElement))
+		{
+			return false;
+		}
+		return m_text.compareTo(((TextElement) o).m_text) == 0;
+	}
 }
