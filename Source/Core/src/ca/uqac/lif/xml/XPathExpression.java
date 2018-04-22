@@ -1,6 +1,6 @@
 /*
     xml-lif, manipulate XML elements in Java
-    Copyright (C) 2016 Sylvain Hallé
+    Copyright (C) 2016-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,43 +25,43 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
-* Performs queries on XML documents. The queries are written using the XPath
-* syntax, with the following restrictions:
-* <ul>
-* <li>Transitive children (<tt>//</tt>), parent (<tt>../</tt>) and
-* <tt>sibling</tt> axes are not supported</li>
-* <li>Attributes (<tt>@att</tt>) are not supported</li>
-* <li>The only operator allowed in a predicate is equality between a path
-* and a constant</li>
-* </ul>
-* Normal usage involves instantiating an expression from a String using
-* the {@link #parse(String)} method, and then querying a document using the
-* {@link #evaluate(XmlElement)} method.
-* <p>
-* Examples of valid queries:
-* <ol>
-* <li><tt>abc/def</tt></li>
-* <li><tt>abc[ghi=3]/def/text()</tt></li>
-* <li><tt>abc[ghi=3][q=0]/def[xyz='hello']</tt></li>
-* </ol>
-*/ 
+ * Performs queries on XML documents. The queries are written using the XPath
+ * syntax, with the following restrictions:
+ * <ul>
+ * <li>Transitive children (<tt>//</tt>), parent (<tt>../</tt>) and
+ * <tt>sibling</tt> axes are not supported</li>
+ * <li>Attributes (<tt>@att</tt>) are not supported</li>
+ * <li>The only operator allowed in a predicate is equality between a path
+ * and a constant</li>
+ * </ul>
+ * Normal usage involves instantiating an expression from a String using
+ * the {@link #parse(String)} method, and then querying a document using the
+ * {@link #evaluate(XmlElement)} method.
+ * <p>
+ * Examples of valid queries:
+ * <ol>
+ * <li><tt>abc/def</tt></li>
+ * <li><tt>abc[ghi=3]/def/text()</tt></li>
+ * <li><tt>abc[ghi=3][q=0]/def[xyz='hello']</tt></li>
+ * </ol>
+ */ 
 public class XPathExpression
 {
 	/**
 	 * The character used to separate segments of a path
 	 */
 	public static transient final String s_pathSeparator = "/";
-	
+
 	/**
 	 * The number formatter used to parse strings into numbers
 	 */
 	private static transient final NumberFormat s_numberFormat = NumberFormat.getInstance();
-	
+
 	/**
 	 * The segments of the path expression
 	 */
 	/*@NonNull*/ List<Segment> m_segments;
-	
+
 	/**
 	 * Creates an XPath expression from a list of segments
 	 * @param segments The segments
@@ -72,6 +72,20 @@ public class XPathExpression
 		m_segments = segments;
 	}
 	
+	/**
+	 * Creates a copy of the current XPath expression
+	 * @return A copy
+	 */
+	public XPathExpression duplicate()
+	{
+		List<Segment> segments = new ArrayList<Segment>(m_segments.size());
+		for (Segment s : m_segments)
+		{
+			segments.add(s.duplicate());
+		}
+		return new XPathExpression(segments);
+	}
+
 	/**
 	 * Parses an XPath expression from a string
 	 * @param s The string
@@ -93,7 +107,7 @@ public class XPathExpression
 		}
 		return new XPathExpression(segments);
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, and returns a single element 
 	 * @param root The root
@@ -110,7 +124,7 @@ public class XPathExpression
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, and casts its result as a string
 	 * @param root The root
@@ -128,7 +142,7 @@ public class XPathExpression
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, and casts its result as a number
 	 * @param root The root
@@ -151,7 +165,7 @@ public class XPathExpression
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, and casts its result as an
 	 * <code>int</code>
@@ -185,7 +199,7 @@ public class XPathExpression
 		}
 		return n.floatValue();
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, and casts all its results as a string
 	 * @param root The root
@@ -205,7 +219,7 @@ public class XPathExpression
 		}
 		return new_col;
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, and casts all its results as a number
 	 * @param root The root
@@ -230,7 +244,7 @@ public class XPathExpression
 		}
 		return new_col;
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, using some element as the root
 	 * @param root The root
@@ -240,7 +254,7 @@ public class XPathExpression
 	{
 		return evaluate(m_segments, root);
 	}
-	
+
 	/**
 	 * Evaluates an XPath expression, using some element as the root and a
 	 * list of segments
@@ -298,7 +312,7 @@ public class XPathExpression
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Gets the segments of this XPath expression
 	 * @return The list of segments
@@ -323,7 +337,7 @@ public class XPathExpression
 			super(message);
 		}
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -338,7 +352,7 @@ public class XPathExpression
 		}
 		return out.toString();
 	}
-	
+
 	/**
 	 * Gets a new instance of the collection return type.
 	 * This is so that we can easily change the actual type of collection
@@ -349,7 +363,7 @@ public class XPathExpression
 	{
 		return new HashSet<XmlElement>();
 	}
-	
+
 	/**
 	 * Gets a new instance of the collection string return type.
 	 * This is so that we can easily change the actual type of collection
@@ -360,7 +374,7 @@ public class XPathExpression
 	{
 		return new HashSet<String>();
 	}
-	
+
 	/**
 	 * Gets a new instance of the collection number return type.
 	 * This is so that we can easily change the actual type of collection
@@ -382,7 +396,7 @@ public class XPathExpression
 	{
 		return new ArrayList<Segment>();
 	}
-	
+
 	/**
 	 * Parses a string as a number
 	 * @param s The string

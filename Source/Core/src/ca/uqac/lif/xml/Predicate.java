@@ -1,6 +1,6 @@
 /*
     xml-lif, manipulate XML elements in Java
-    Copyright (C) 2016 Sylvain Hallé
+    Copyright (C) 2016-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -41,4 +41,10 @@ public abstract class Predicate
 	}
 	
 	public abstract boolean evaluate(/*@NonNull*/ XmlElement root);
+	
+	/**
+	 * Creates a copy of the predicate
+	 * @return A copy of the predicate
+	 */
+	public abstract Predicate duplicate();
 }

@@ -1,6 +1,6 @@
 /*
     xml-lif, manipulate XML elements in Java
-    Copyright (C) 2016 Sylvain Hallé
+    Copyright (C) 2016-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -28,5 +28,11 @@ public class TextSegment extends Segment
 	public String toString()
 	{
 		return s_expression;
+	}
+	
+	@Override
+	public TextSegment duplicate()
+	{
+		return new TextSegment();
 	}
 }

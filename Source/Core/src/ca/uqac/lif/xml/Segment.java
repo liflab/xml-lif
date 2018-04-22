@@ -1,6 +1,6 @@
 /*
     xml-lif, manipulate XML elements in Java
-    Copyright (C) 2016 Sylvain Hallé
+    Copyright (C) 2016-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -28,25 +28,43 @@ public class Segment
 	 * The predicates (if any) associated to this segment
 	 */
 	private Collection</*@NonNull*/ Predicate> m_predicates;
-	
+
 	/**
 	 * The element name corresponding to this segment
 	 */
 	private String m_elementName = "";
-	
+
 	Segment()
 	{
 		super();
 		m_predicates = null;
 	}
-	
+
 	public Segment(/*@NonNull*/ String element_name, /*@NonNull*/ Collection<Predicate> predicates)
 	{
 		super();
 		m_elementName = element_name;
 		m_predicates = predicates;
 	}
-	
+
+	/**
+	 * Creates a copy of the current segment
+	 * @return A copy of the segment
+	 */
+	public Segment duplicate()
+	{
+		if (m_predicates != null)
+		{
+			Collection<Predicate> predicates = new ArrayList<Predicate>(m_predicates.size());
+			for (Predicate p : predicates)
+			{
+				predicates.add(p.duplicate());
+			}
+			return new Segment(m_elementName, predicates);
+		}
+		return new Segment(m_elementName, null);
+	}
+
 	public static /*@NonNull*/ Segment parse(/*@NonNull*/ String s) throws XPathParseException
 	{
 		String element_name = "";
@@ -92,7 +110,7 @@ public class Segment
 		}
 		return new Segment(element_name, predicates);
 	}
-	
+
 	/**
 	 * Returns the element name corresponding to this segment
 	 * @return The element name
@@ -101,7 +119,7 @@ public class Segment
 	{
 		return m_elementName;
 	}
-	
+
 	/**
 	 * Gets the collection of predicates associated to this segment
 	 * @return The predicates
@@ -110,7 +128,7 @@ public class Segment
 	{
 		return m_predicates;
 	}
-	
+
 	@Override
 	public /*@NonNull*/ String toString()
 	{
