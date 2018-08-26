@@ -20,28 +20,34 @@ Usage
 
 ### To parse a string
 
-    String my_string = "some XML...":
-    try {
-      XmlElement elem = XmlElement.parse(my_string);
-    } catch (XmlParseException e) {
-      // Do something
-    }
+``` java
+String my_string = "some XML...":
+try {
+  XmlElement elem = XmlElement.parse(my_string);
+} catch (XmlParseException e) {
+  // Do something
+}
+```
 
 ### To create an XML structure
 
-    XmlElement my_element = new XmlElement("foo");
-    XmlElement inside = new XmlElement("bar");
-    inside.addChild(new TextElement("Hello"));
-    my_element.addChild(inside);
+``` java
+XmlElement my_element = new XmlElement("foo");
+XmlElement inside = new XmlElement("bar");
+inside.addChild(new TextElement("Hello"));
+my_element.addChild(inside);
+```
 
 ### To query an object using an XPath expression
 
-    XPathExpression exp = XPathExpression.parse("foo/bar/text()");
-    try {
-      Collection<XmlElement> result = XP.get(my_map, "b[0]");
-    } catch (XPathParseException e) {
-      // Do something
-    }
+``` java
+XPathExpression exp = XPathExpression.parse("foo/bar/text()");
+try {
+  Collection<XmlElement> result = XP.get(my_map, "b[0]");
+} catch (XPathParseException e) {
+  // Do something
+}
+```
 
 With the element `my_element` created above, this would return the
 `TextElement` with value "Hello".
