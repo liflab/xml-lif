@@ -65,4 +65,10 @@ public class TextElement extends XmlElement
 		}
 		return m_text.compareTo(((TextElement) o).m_text) == 0;
 	}
+	
+	@Override
+	public TextElement getTextElement()
+	{
+		return this;
+	}
 }
