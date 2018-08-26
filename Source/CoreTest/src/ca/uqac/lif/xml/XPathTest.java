@@ -405,4 +405,17 @@ public class XPathTest
 			assertNotNull(xe);
 		}
 	}
+	
+	@Test
+	public void testDuplicate3() throws XPathParseException, XmlParseException
+	{
+		XmlElement doc = XmlElement.parse("<root><foo><bar>0</bar><baz>0</baz></foo><foo><bar>1</bar><baz>2</baz></foo></root>");
+		XPathExpression xpath = XPathExpression.parse("root/foo[bar=0]/baz").duplicate();
+		Collection<XmlElement> result = xpath.evaluate(doc);
+		assertEquals(1, result.size());
+		for (XmlElement xe : result)
+		{
+			assertNotNull(xe);
+		}
+	}
 }

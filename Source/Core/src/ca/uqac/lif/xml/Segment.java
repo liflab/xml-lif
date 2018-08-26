@@ -56,7 +56,7 @@ public class Segment
 		if (m_predicates != null)
 		{
 			Collection<Predicate> predicates = new ArrayList<Predicate>(m_predicates.size());
-			for (Predicate p : predicates)
+			for (Predicate p : m_predicates)
 			{
 				predicates.add(p.duplicate());
 			}
