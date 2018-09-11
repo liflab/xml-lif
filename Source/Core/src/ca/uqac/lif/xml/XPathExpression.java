@@ -21,7 +21,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -361,7 +360,7 @@ public class XPathExpression
 	 */
 	protected static Collection<XmlElement> getNewCollection()
 	{
-		return new HashSet<XmlElement>();
+		return new ArrayList<XmlElement>();
 	}
 
 	/**
@@ -372,7 +371,7 @@ public class XPathExpression
 	 */
 	protected static Collection<String> getNewStringCollection()
 	{
-		return new HashSet<String>();
+		return new ArrayList<String>();
 	}
 
 	/**
@@ -383,7 +382,7 @@ public class XPathExpression
 	 */
 	protected static Collection<Number> getNewNumberCollection()
 	{
-		return new HashSet<Number>();
+		return new ArrayList<Number>();
 	}
 
 	/**
